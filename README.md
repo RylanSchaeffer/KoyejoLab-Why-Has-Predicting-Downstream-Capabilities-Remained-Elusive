@@ -1,9 +1,10 @@
 # Why Has Predicting Downstream Capabilities of Frontier AI Models with Scale Remained Elusive?
 
-This repository contains code and figures for our paper
-[Why Has Predicting Downstream Capabilities of Frontier AI Models with Scale Remained Elusive?](https://arxiv.org/abs/2406.04391).
-
 ![](figures/Transformations_v10.png)
+
+This repository contains code and figures for our paper
+[Why Has Predicting Downstream Capabilities of Frontier AI Models with Scale Remained Elusive?](https://arxiv.org/abs/2406.04391)
+by Rylan Schaeffer, Hailey Schoelkopf, Brando Miranda, Gabriel Mukobi, Varun Madan, Adam Ibrahim, Herbie Bradley, Stella Biderman and Sanmi Koyejo.
 
 [![arXiv](https://img.shields.io/badge/arXiv-2406.04391-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2407.15211)
 
@@ -53,7 +54,7 @@ This project's code has three broad stages:
 2. **Computing Compute-Score Correlations**: For each 4-tuple of `(language model family, NLP benchmark, correlation metric, performance score)`, we 
   compute the per-sample correlations between scores and compute over the model family. This is done using [scripts/compute_correlations_between_sample_scores_and_compute.py](scripts%2Fcompute_correlations_between_sample_scores_and_compute.py)
   and [W&B sweeps](sweeps/correlations_between_sample_scores_and_compute)
-3. **Analyzing Compute-Score Correlations**: We analyze the results of the correlations in the paper and generate figures using the scripts in [notebooks](notebooks).
+3. **Analyzing Compute-Score Correlations**: We analyze the results of the correlations in the paper and generate figures using the Python scripts in [notebooks](notebooks).
 
 ## Contributing
 
@@ -75,7 +76,7 @@ To cite this work, please use:
 }
 ```
 
-Note: We created a new clean repository for the review process and the new commit history is not representative
+Note: We created a new clean repository for the review process; thus, this repo's commit history is not representative
 of each individual's contributions.
 
 ## Contact
