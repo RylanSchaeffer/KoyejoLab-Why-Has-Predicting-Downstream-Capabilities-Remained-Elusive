@@ -64,10 +64,10 @@ def plot_avg_score_vs_sample_idx_split_metric(
         sample_idx_to_sort_idx = {
             sort_idx: sample_idx for sample_idx, sort_idx in enumerate(sort_indices)
         }
-        benchmark_and_optional_task_metric_scores_df[
-            "sort_idx"
-        ] = benchmark_and_optional_task_metric_scores_df["sample_idx"].map(
-            lambda sample_idx: sample_idx_to_sort_idx[sample_idx]
+        benchmark_and_optional_task_metric_scores_df["sort_idx"] = (
+            benchmark_and_optional_task_metric_scores_df["sample_idx"].map(
+                lambda sample_idx: sample_idx_to_sort_idx[sample_idx]
+            )
         )
         # Avoiding `ValueError: cannot reindex from a duplicate axis` mean?
         benchmark_and_optional_task_metric_scores_df.reset_index(

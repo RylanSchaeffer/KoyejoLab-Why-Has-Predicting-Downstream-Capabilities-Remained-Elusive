@@ -42,10 +42,17 @@ Change into the directory and install `lm-evaluation-harness`:
 ## Data
 
 Data will be provided once the paper is accepted and published. For early access, please contact the 
-authors [below](#contact).
+authors [see Contact below](#contact).
 
-## Usage
+## Code
 
+This project's code has three broad stages:
+
+1. **Collecting Language Model Scores on NLP Benchmarks**: Running language model families on standard LLM benchmarks and collating the per-sample results.
+2. **Computing Compute-Score Correlations**: For each 4-tuple of `(language model family, NLP benchmark, correlation metric, performance score)`, we 
+  compute the per-sample correlations between scores and compute over the model family. This is done using [scripts/compute_correlations_between_sample_scores_and_compute.py](scripts%2Fcompute_correlations_between_sample_scores_and_compute.py)
+  and [W&B sweeps](sweeps/correlations_between_sample_scores_and_compute)
+3. **Analyzing Compute-Score Correlations**: We analyze the results of the correlations in the paper and generate figures using the scripts in [notebooks](notebooks).
 
 ## Contributing
 

@@ -230,9 +230,9 @@ def extract_per_metric_per_sample_results_from_df(
             pass
             # TODO: Debug why mctaco has f1 as a list of of 2 integers.
     if "f1_abstractive" in model_benchmark_per_sample_results_df.columns:
-        metrics_to_scores_dict[
-            "f1_abstractive"
-        ] = model_benchmark_per_sample_results_df["f1_abstractive"].values
+        metrics_to_scores_dict["f1_abstractive"] = (
+            model_benchmark_per_sample_results_df["f1_abstractive"].values
+        )
 
     if "perplexity" in model_benchmark_per_sample_results_df.columns:
         metrics_to_scores_dict["perplexity"] = model_benchmark_per_sample_results_df[
@@ -408,19 +408,19 @@ def extract_per_sample_benchmark_specific_metrics_from_df(
 
         for idx, prob_choice_vocab in enumerate(prob_vocab_choices):
             additional_metrics_dict[f"prob_vocab_choice={idx}"] = prob_choice_vocab
-            additional_metrics_dict[
-                f"log_likelihood_vocab_choice={idx}"
-            ] = log_likelihoods[idx]
-            additional_metrics_dict[
-                f"neg_log_likelihood_vocab_choice={idx}"
-            ] = -log_likelihoods[idx]
+            additional_metrics_dict[f"log_likelihood_vocab_choice={idx}"] = (
+                log_likelihoods[idx]
+            )
+            additional_metrics_dict[f"neg_log_likelihood_vocab_choice={idx}"] = (
+                -log_likelihoods[idx]
+            )
             additional_metrics_dict[f"prob_choices_choice={idx}"] = prob_choices[idx]
             additional_metrics_dict[f"log_likelihood_choices_choice={idx}"] = np.log(
                 prob_choices[idx]
             )
-            additional_metrics_dict[
-                f"neg_log_likelihood_choices_choice={idx}"
-            ] = -additional_metrics_dict[f"log_likelihood_choices_choice={idx}"]
+            additional_metrics_dict[f"neg_log_likelihood_choices_choice={idx}"] = (
+                -additional_metrics_dict[f"log_likelihood_choices_choice={idx}"]
+            )
 
         # calculate exact-match accuracy
         # (is target string greedily generated, globally)

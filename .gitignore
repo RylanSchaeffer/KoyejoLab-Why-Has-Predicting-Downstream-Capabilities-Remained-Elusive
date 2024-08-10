@@ -1,3 +1,15 @@
 .idea
+.run
+.vscode/
+**/.DS_Store
+
+wandb/
+
 **/__pycache__
 **/*.pyc
+
+eval_results/
+
+# Submodules
+bigcode-evaluation-harness/
+lm-evaluation-harness/
