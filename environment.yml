@@ -1,4 +1,4 @@
-name: elusive_env
+name: elusive
 channels:
   - pytorch
   - nvidia

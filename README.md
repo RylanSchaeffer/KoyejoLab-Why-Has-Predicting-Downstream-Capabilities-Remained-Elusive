@@ -17,7 +17,7 @@ This repository contains code and figures for our paper
 
 2. Create and activate the conda environment:
 
-`conda env create --file environment.yml -y && conda activate elusive_env`
+`conda env create --file environment.yml -y && conda activate elusive`
 
 4. Update pip.
 
