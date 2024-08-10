@@ -1,0 +1,18 @@
+name: elusive_env
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.10
+  - black
+  - matplotlib
+  - numpy
+  - pandas
+  - pyarrow
+  - scipy
+  - scikit-learn
+  - scikit-image
+  - seaborn
+  - wandb
+  - tqdm

@@ -1,0 +1,32 @@
+program: scripts/compute_correlations_between_sample_scores_and_compute.py
+project: predictable-llm-evals-compute-score-correlations
+method: grid
+parameters:
+  benchmark_and_optional_task:
+    values:
+    - "race"
+  correlation_metric:
+    values:
+      - "kendall"
+      - "pearson"
+      - "spearman"
+  evals_collation_date:
+    values:
+      - "2024-05-31"
+  metric:
+    values:
+    - "acc"
+    - "acc_norm"
+    - "brier_score"
+    - "log_prob_vocab_correct"
+    - "prob_vocab_correct"
+    - "prob_choices_correct"
+    - "target_is_greedy"
+  model_family:
+    values:
+      - "CEREBRAS_ALL_FAMILY"
+      - "INCITE_7B_PARAMETERS_TOKEN_FAMILY"
+      - "LLM360_AMBER_7B_TOKENS_FAMILY"
+      - "OLMo_7B_PARAMETERS_TOKENS_FAMILY"
+      - "PYTHIA_12B_PARAMETERS_TOKENS_FAMILY"
+      - "PYTHIA_300B_TOKENS_PARAMETERS_FAMILY"
