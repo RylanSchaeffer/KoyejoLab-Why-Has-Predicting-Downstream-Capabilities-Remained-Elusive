@@ -7,7 +7,7 @@ This repository contains code and figures for our paper
 
 [![arXiv](https://img.shields.io/badge/arXiv-2406.04391-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2407.15211)
 
-[**Setup**](#installation) | [**Usage**](#usage) | [**Contributing**](#contributing) | [**Citation**](#citation) | [**Contact**](#contact)
+[**Setup**](#installation) | [**Usage**](#usage) | [**Contributing**](#contributing) | [**Citating**](#citing) | [**Contact**](#contact)
 
 
 ## Installation
@@ -59,7 +59,7 @@ This project's code has three broad stages:
 
 Contributions are welcome! Please format your code with [black](https://github.com/psf/black).
 
-## Citation
+## Citing
 
 To cite this work, please use:
 
