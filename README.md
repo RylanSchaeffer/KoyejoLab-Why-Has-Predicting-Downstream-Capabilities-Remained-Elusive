@@ -82,4 +82,4 @@ of each individual's contributions.
 ## Contact
 
 Questions? Comments? Interested in collaborating?
-Open an issue or email rschaef@cs.stanford.edu and sanmi@cs.stanford.edu.
+Open an [issue](https://github.com/RylanSchaeffer/KoyejoLab-Why-Has-Predicting-Downstream-Capabilities-Remained-Elusive/issues) or email rschaef@cs.stanford.edu and sanmi@cs.stanford.edu.
