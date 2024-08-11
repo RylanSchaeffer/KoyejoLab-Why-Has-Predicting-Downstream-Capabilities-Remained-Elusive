@@ -24,6 +24,62 @@ sns.set_style("whitegrid")
 sns.set_theme(style="whitegrid")
 
 
+def plot_benchmark_and_optional_task_vs_model_family_hue_max_avg_acc_per_family(
+    all_model_all_benchmark_per_sample_results_df: pd.DataFrame,
+    models_df: pd.DataFrame,
+    plot_dir: str,
+    plot_title: str = "benchmark_and_optional_task_vs_model_family_hue_max_avg_score_per_family",
+):
+    # Compute average score per model per benchmark.
+    all_model_all_benchmark_avg_acc_df = (
+        all_model_all_benchmark_per_sample_results_df[
+            all_model_all_benchmark_per_sample_results_df["metric"] == "acc"
+        ]
+        .groupby(["benchmark_and_optional_task", "Model Nickname"])["score"]
+        .mean()
+        .reset_index()
+    )
+
+    extended_all_model_all_benchmark_avg_score_df = (
+        all_model_all_benchmark_avg_acc_df.merge(
+            models_df,
+            left_on="Model Nickname",
+            right_on="Model Nickname",
+            how="left",
+        )
+    )
+
+    # Compute maximum average score per model family per benchmark.
+    extended_all_model_all_benchmark_max_avg_score_per_family_df = (
+        extended_all_model_all_benchmark_avg_score_df.groupby(
+            ["benchmark_and_optional_task", "Model Family"]
+        )["score"]
+        .max()
+        .reset_index()
+    )
+
+    plt.close()
+    plt.figure(figsize=(15, 20))
+    g = sns.heatmap(
+        extended_all_model_all_benchmark_max_avg_score_per_family_df.pivot(
+            index="benchmark_and_optional_task",
+            columns="Model Family",
+            values="score",
+        ),
+        cmap="Spectral_r",
+        vmin=0.0,
+        vmax=1.0,
+        # Add "Accuracy" to the colorbar.
+        cbar_kws={"label": "Max Avg Accuracy (Over Models in Model Family)"},
+    )
+    g.set_xticklabels(g.get_xticklabels(), rotation=90)
+    save_plot_with_multiple_extensions(
+        plot_dir=plot_dir,
+        plot_title=plot_title,
+    )
+    # plt.show()
+
+
 def plot_avg_score_vs_sample_idx_split_metric(
     benchmark_and_optional_task_scores_df: pd.DataFrame,
     benchmark_and_optional_task: str,
@@ -64,10 +120,10 @@ def plot_avg_score_vs_sample_idx_split_metric(
         sample_idx_to_sort_idx = {
             sort_idx: sample_idx for sample_idx, sort_idx in enumerate(sort_indices)
         }
-        benchmark_and_optional_task_metric_scores_df["sort_idx"] = (
-            benchmark_and_optional_task_metric_scores_df["sample_idx"].map(
-                lambda sample_idx: sample_idx_to_sort_idx[sample_idx]
-            )
+        benchmark_and_optional_task_metric_scores_df[
+            "sort_idx"
+        ] = benchmark_and_optional_task_metric_scores_df["sample_idx"].map(
+            lambda sample_idx: sample_idx_to_sort_idx[sample_idx]
         )
         # Avoiding `ValueError: cannot reindex from a duplicate axis` mean?
         benchmark_and_optional_task_metric_scores_df.reset_index(
