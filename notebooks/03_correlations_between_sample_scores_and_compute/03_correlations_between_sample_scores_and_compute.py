@@ -148,191 +148,191 @@ correlation_distribution_statistics_results_dir = os.path.join(
 )
 os.makedirs(correlation_distribution_statistics_results_dir, exist_ok=True)
 
-# for (
-#     (correlation_metric,),
-#     benchmark_metric_model_family_statistics_df,
-# ) in benchmark_metric_model_family_correlations_statistics_df.groupby(
-#     ["correlation_metric"]
-# ):
-#     correlation_metric_results_dir = os.path.join(
-#         correlation_distribution_statistics_results_dir,
-#         f"correlation_metric={correlation_metric}",
-#     )
-#     os.makedirs(correlation_metric_results_dir, exist_ok=True)
-#
-#     benchmark_metric_model_family_statistics_melted_df = (
-#         benchmark_metric_model_family_statistics_df.melt(
-#             id_vars=id_columns,
-#             value_vars=correlation_distribution_statistics_columns,
-#             var_name="Correlation Distribution Statistic",
-#             value_name="Statistic Value",
-#         )
-#     )
-#     benchmark_metric_model_family_statistics_melted_df[
-#         "Non-Nice-String Correlation Distribution Statistic"
-#     ] = benchmark_metric_model_family_statistics_melted_df[
-#         "Correlation Distribution Statistic"
-#     ]
-#     benchmark_metric_model_family_statistics_melted_df[
-#         "Correlation Distribution Statistic"
-#     ] = benchmark_metric_model_family_statistics_melted_df[
-#         "Non-Nice-String Correlation Distribution Statistic"
-#     ].map(
-#         lambda k: pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT.get(k, k)
-#     )
-#     benchmark_metric_model_family_statistics_melted_df[
-#         "benchmark_and_optional_task"
-#     ] = benchmark_metric_model_family_statistics_melted_df[
-#         "benchmark_and_optional_task"
-#     ].map(
-#         lambda k: pred_evals.globals.BENCHMARKS_NICE_STRINGS_DICT.get(k, k)
-#     )
-#     benchmark_metric_model_family_statistics_melted_df[
-#         "metric"
-#     ] = benchmark_metric_model_family_statistics_melted_df["metric"].map(
-#         lambda k: pred_evals.globals.PERFORMANCE_METRICS_NICE_STRINGS_DICT.get(k, k)
-#     )
-#     benchmark_metric_model_family_statistics_melted_df.rename(
-#         columns={"Model Family": "Model Family", "metric": "Metric"}, inplace=True
-#     )
-#
-#     plt.close()
-#     # palette = sns.color_palette("coolwarm_r", n_colors=len(sorted_unique_metrics))
-#     # palette = sns.color_palette("icefire", n_colors=len(sorted_unique_metrics))
-#     # palette = sns.color_palette("Spectral_r", n_colors=len(sorted_unique_metrics))
-#     # palette = sns.color_palette(palette="RdYlBu_r", n_colors=len(sorted_unique_metrics))
-#     # palette = sns.color_palette(palette="cool_r", n_colors=len(sorted_unique_metrics))
-#     # palette = sns.color_palette(palette="seismic", n_colors=len(sorted_unique_metrics))
-#     g = sns.relplot(
-#         data=benchmark_metric_model_family_statistics_melted_df,
-#         kind="scatter",
-#         y="benchmark_and_optional_task",
-#         x="Statistic Value",
-#         hue="Metric",
-#         hue_order=[
-#             pred_evals.globals.PERFORMANCE_METRICS_NICE_STRINGS_DICT.get(
-#                 m,
-#             )
-#             for m in sorted_unique_metrics
-#         ],
-#         col="Correlation Distribution Statistic",
-#         col_order=[
-#             "Mean(Correlations)",
-#             "Median(Correlations)",
-#             "AUC of Correlations' Complementary Cumulative Distribution Function",
-#             "-Min(Wasserstein(Correlations, 1), Wasserstein(Correlations, -1))",
-#         ],
-#         col_wrap=2,
-#         style="Model Family",
-#         style_order=sorted_unique_model_families,
-#         s=250,
-#         palette=palette,
-#         linewidth=0,  # Remove white borders around points.
-#         facet_kws={"sharex": False},
-#         height=12,
-#     )
-#     g.set_axis_labels(y_var="Benchmark (and Optional Task)")
-#     g.set_titles(col_template="")
-#     # Iterate over each column and set the x-axis label.
-#     # Setting x-axis labels based on column names
-#     for ax, title in zip(g.axes.flat, g.col_names):
-#         ax.set_xlabel(title)
-#     g.fig.suptitle(
-#         f"Correlation Distribution Statistics by Benchmark and Metric ({pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT[correlation_metric]} Correlations)"
-#     )
-#     sns.move_legend(g, "upper left", bbox_to_anchor=(1, 1))
-#     pred_evals.plot.save_plot_with_multiple_extensions(
-#         plot_dir=correlation_metric_results_dir,
-#         plot_title=f"benchmark_vs_{correlation_metric}_correlation_distribution_statistics_by_model_family_by_metric",
-#     )
-#     # plt.show()
-#     plt.close()
-#
-#     # Plot each subfigure separately.
-#     for (
-#         (statistic,),
-#         benchmark_metric_model_family_statistic_melted_df,
-#     ) in benchmark_metric_model_family_statistics_melted_df.groupby(
-#         ["Non-Nice-String Correlation Distribution Statistic"]
-#     ):
-#         plt.close()
-#         g = sns.relplot(
-#             data=benchmark_metric_model_family_statistic_melted_df,
-#             kind="scatter",
-#             y="benchmark_and_optional_task",
-#             x="Statistic Value",
-#             hue="Metric",
-#             hue_order=[
-#                 pred_evals.globals.PERFORMANCE_METRICS_NICE_STRINGS_DICT.get(
-#                     m,
-#                 )
-#                 for m in sorted_unique_metrics
-#             ],
-#             style="Model Family",
-#             style_order=sorted_unique_model_families,
-#             s=250,
-#             linewidth=0,  # Remove white borders around points.
-#             height=12,
-#             palette=palette,
-#         )
-#         g.set_axis_labels(
-#             "Statistic Value",
-#             "Benchmark (and Optional Task)",
-#         )
-#         g.fig.suptitle(
-#             f"{pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT.get(statistic, statistic)}\n"
-#             f"{pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT[correlation_metric]} Correlations"
-#         )
-#         sns.move_legend(g, "upper left", bbox_to_anchor=(1, 1))
-#         pred_evals.plot.save_plot_with_multiple_extensions(
-#             plot_dir=correlation_metric_results_dir,
-#             plot_title=f"benchmark_vs_{correlation_metric}_correlation_distribution_statistic={statistic}_by_model_family_by_metric",
-#         )
-#         # plt.show()
-#         plt.close()
-#
-#
-# for statistic_column in correlation_distribution_statistics_columns:
-#     plt.close()
-#     g = sns.relplot(
-#         data=benchmark_metric_model_family_correlations_statistics_df,
-#         kind="scatter",
-#         y="benchmark_and_optional_task",
-#         x=statistic_column,
-#         hue="metric",
-#         hue_order=sorted_unique_metrics,
-#         style="Model Family",
-#         style_order=sorted_unique_model_families,
-#         col="correlation_metric",
-#         col_order=["kendall", "pearson", "spearman"],
-#         s=100,
-#         linewidth=0,  # Remove white borders around points.
-#         height=12,
-#         palette=palette,
-#     )
-#     if statistic_column in pred_evals.globals.PERFORMANCE_METRICS_BOUNDS_DICT:
-#         g.set(xlim=pred_evals.globals.PERFORMANCE_METRICS_BOUNDS_DICT[statistic_column])
-#     if statistic_column in pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT:
-#         title = f"{pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT[statistic_column]} by Benchmark and Metric"
-#         xlabel = pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT[
-#             statistic_column
-#         ]
-#     else:
-#         title = (f"{statistic_column} by Benchmark and Metric",)
-#         xlabel = statistic_column
-#     g.fig.suptitle(title)
-#     g.set_axis_labels(
-#         xlabel,
-#         "Benchmark (and Optional Task)",
-#     )
-#     g.set_titles(col_template="Correlation: {col_name}")
-#     sns.move_legend(g, "upper left", bbox_to_anchor=(1, 1))
-#     pred_evals.plot.save_plot_with_multiple_extensions(
-#         plot_dir=correlation_distribution_statistics_results_dir,
-#         plot_title=f"{statistic_column}_vs_benchmark",
-#     )
-#     # plt.show()
-#     plt.close()
+for (
+    (correlation_metric,),
+    benchmark_metric_model_family_statistics_df,
+) in benchmark_metric_model_family_correlations_statistics_df.groupby(
+    ["correlation_metric"]
+):
+    correlation_metric_results_dir = os.path.join(
+        correlation_distribution_statistics_results_dir,
+        f"correlation_metric={correlation_metric}",
+    )
+    os.makedirs(correlation_metric_results_dir, exist_ok=True)
+
+    benchmark_metric_model_family_statistics_melted_df = (
+        benchmark_metric_model_family_statistics_df.melt(
+            id_vars=id_columns,
+            value_vars=correlation_distribution_statistics_columns,
+            var_name="Correlation Distribution Statistic",
+            value_name="Statistic Value",
+        )
+    )
+    benchmark_metric_model_family_statistics_melted_df[
+        "Non-Nice-String Correlation Distribution Statistic"
+    ] = benchmark_metric_model_family_statistics_melted_df[
+        "Correlation Distribution Statistic"
+    ]
+    benchmark_metric_model_family_statistics_melted_df[
+        "Correlation Distribution Statistic"
+    ] = benchmark_metric_model_family_statistics_melted_df[
+        "Non-Nice-String Correlation Distribution Statistic"
+    ].map(
+        lambda k: pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT.get(k, k)
+    )
+    benchmark_metric_model_family_statistics_melted_df[
+        "benchmark_and_optional_task"
+    ] = benchmark_metric_model_family_statistics_melted_df[
+        "benchmark_and_optional_task"
+    ].map(
+        lambda k: pred_evals.globals.BENCHMARKS_NICE_STRINGS_DICT.get(k, k)
+    )
+    benchmark_metric_model_family_statistics_melted_df[
+        "metric"
+    ] = benchmark_metric_model_family_statistics_melted_df["metric"].map(
+        lambda k: pred_evals.globals.PERFORMANCE_METRICS_NICE_STRINGS_DICT.get(k, k)
+    )
+    benchmark_metric_model_family_statistics_melted_df.rename(
+        columns={"Model Family": "Model Family", "metric": "Metric"}, inplace=True
+    )
+
+    plt.close()
+    # palette = sns.color_palette("coolwarm_r", n_colors=len(sorted_unique_metrics))
+    # palette = sns.color_palette("icefire", n_colors=len(sorted_unique_metrics))
+    # palette = sns.color_palette("Spectral_r", n_colors=len(sorted_unique_metrics))
+    # palette = sns.color_palette(palette="RdYlBu_r", n_colors=len(sorted_unique_metrics))
+    # palette = sns.color_palette(palette="cool_r", n_colors=len(sorted_unique_metrics))
+    # palette = sns.color_palette(palette="seismic", n_colors=len(sorted_unique_metrics))
+    g = sns.relplot(
+        data=benchmark_metric_model_family_statistics_melted_df,
+        kind="scatter",
+        y="benchmark_and_optional_task",
+        x="Statistic Value",
+        hue="Metric",
+        hue_order=[
+            pred_evals.globals.PERFORMANCE_METRICS_NICE_STRINGS_DICT.get(
+                m,
+            )
+            for m in sorted_unique_metrics
+        ],
+        col="Correlation Distribution Statistic",
+        col_order=[
+            "Mean(Correlations)",
+            "Median(Correlations)",
+            "AUC of Correlations' Complementary Cumulative Distribution Function",
+            "-Min(Wasserstein(Correlations, 1), Wasserstein(Correlations, -1))",
+        ],
+        col_wrap=2,
+        style="Model Family",
+        style_order=sorted_unique_model_families,
+        s=250,
+        palette=palette,
+        linewidth=0,  # Remove white borders around points.
+        facet_kws={"sharex": False},
+        height=12,
+    )
+    g.set_axis_labels(y_var="Benchmark (and Optional Task)")
+    g.set_titles(col_template="")
+    # Iterate over each column and set the x-axis label.
+    # Setting x-axis labels based on column names
+    for ax, title in zip(g.axes.flat, g.col_names):
+        ax.set_xlabel(title)
+    g.fig.suptitle(
+        f"Correlation Distribution Statistics by Benchmark and Metric ({pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT[correlation_metric]} Correlations)"
+    )
+    sns.move_legend(g, "upper left", bbox_to_anchor=(1, 1))
+    pred_evals.plot.save_plot_with_multiple_extensions(
+        plot_dir=correlation_metric_results_dir,
+        plot_title=f"benchmark_vs_{correlation_metric}_correlation_distribution_statistics_by_model_family_by_metric",
+    )
+    # plt.show()
+    plt.close()
+
+    # Plot each subfigure separately.
+    for (
+        (statistic,),
+        benchmark_metric_model_family_statistic_melted_df,
+    ) in benchmark_metric_model_family_statistics_melted_df.groupby(
+        ["Non-Nice-String Correlation Distribution Statistic"]
+    ):
+        plt.close()
+        g = sns.relplot(
+            data=benchmark_metric_model_family_statistic_melted_df,
+            kind="scatter",
+            y="benchmark_and_optional_task",
+            x="Statistic Value",
+            hue="Metric",
+            hue_order=[
+                pred_evals.globals.PERFORMANCE_METRICS_NICE_STRINGS_DICT.get(
+                    m,
+                )
+                for m in sorted_unique_metrics
+            ],
+            style="Model Family",
+            style_order=sorted_unique_model_families,
+            s=250,
+            linewidth=0,  # Remove white borders around points.
+            height=12,
+            palette=palette,
+        )
+        g.set_axis_labels(
+            "Statistic Value",
+            "Benchmark (and Optional Task)",
+        )
+        g.fig.suptitle(
+            f"{pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT.get(statistic, statistic)}\n"
+            f"{pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT[correlation_metric]} Correlations"
+        )
+        sns.move_legend(g, "upper left", bbox_to_anchor=(1, 1))
+        pred_evals.plot.save_plot_with_multiple_extensions(
+            plot_dir=correlation_metric_results_dir,
+            plot_title=f"benchmark_vs_{correlation_metric}_correlation_distribution_statistic={statistic}_by_model_family_by_metric",
+        )
+        # plt.show()
+        plt.close()
+
+
+for statistic_column in correlation_distribution_statistics_columns:
+    plt.close()
+    g = sns.relplot(
+        data=benchmark_metric_model_family_correlations_statistics_df,
+        kind="scatter",
+        y="benchmark_and_optional_task",
+        x=statistic_column,
+        hue="metric",
+        hue_order=sorted_unique_metrics,
+        style="Model Family",
+        style_order=sorted_unique_model_families,
+        col="correlation_metric",
+        col_order=["kendall", "pearson", "spearman"],
+        s=100,
+        linewidth=0,  # Remove white borders around points.
+        height=12,
+        palette=palette,
+    )
+    if statistic_column in pred_evals.globals.PERFORMANCE_METRICS_BOUNDS_DICT:
+        g.set(xlim=pred_evals.globals.PERFORMANCE_METRICS_BOUNDS_DICT[statistic_column])
+    if statistic_column in pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT:
+        title = f"{pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT[statistic_column]} by Benchmark and Metric"
+        xlabel = pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT[
+            statistic_column
+        ]
+    else:
+        title = (f"{statistic_column} by Benchmark and Metric",)
+        xlabel = statistic_column
+    g.fig.suptitle(title)
+    g.set_axis_labels(
+        xlabel,
+        "Benchmark (and Optional Task)",
+    )
+    g.set_titles(col_template="Correlation: {col_name}")
+    sns.move_legend(g, "upper left", bbox_to_anchor=(1, 1))
+    pred_evals.plot.save_plot_with_multiple_extensions(
+        plot_dir=correlation_distribution_statistics_results_dir,
+        plot_title=f"{statistic_column}_vs_benchmark",
+    )
+    # plt.show()
+    plt.close()
 
 correlation_columns = [
     c
@@ -366,64 +366,64 @@ per_sample_correlations_between_scores_and_compute_df[
 )
 
 
-# for (
-#     (benchmark_and_optional_task, metric, correlation_metric),
-#     benchmark_metric_correlation_df,
-# ) in per_sample_correlations_between_scores_and_compute_df.groupby(
-#     ["benchmark_and_optional_task", "metric", "correlation_metric"]
-# ):
-#     benchmark_and_metric_results_dir = os.path.join(
-#         results_dir,
-#         "correlation_distributions",
-#         benchmark_and_optional_task,
-#         metric,
-#         correlation_metric,
-#     )
-#     os.makedirs(benchmark_and_metric_results_dir, exist_ok=True)
-#
-#     # Plot KDEs and ECDFs of correlation scores.
-#     plt.close()
-#     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15, 6), sharey=False)
-#     sns.kdeplot(
-#         data=benchmark_metric_correlation_df,
-#         x="correlation_score",
-#         hue="Model Family",
-#         hue_order=sorted_unique_model_families,
-#         clip=(-1.0, 1.0),  # Don't evaluate KDE on impermissible correlations.
-#         common_norm=False,
-#         ax=axes[0],
-#         legend=False,
-#     )
-#     axes[0].set_xlim(-1.0, 1.0)
-#     axes[0].set_xlabel("Correlation Between FLOPs and Scores (Per Sample)")
-#     axes[0].set_ylabel(
-#         r"\% of Samples"
-#     )  # Need to escape Latex's interpretation of % as a comment.
-#
-#     g = sns.ecdfplot(
-#         data=benchmark_metric_correlation_df,
-#         x="correlation_score",
-#         hue="Model Family",
-#         hue_order=sorted_unique_model_families,
-#         complementary=True,
-#         ax=axes[1],
-#     )
-#     axes[1].set_xlim(-1.0, 1.0)
-#     axes[1].set_xlabel("Correlation Between FLOPs and Scores (Per Sample)")
-#     axes[1].set_ylabel("1 - CDF")
-#     sns.move_legend(g, "upper left", bbox_to_anchor=(1, 1))
-#     fig.suptitle(
-#         f"Benchmark: {pred_evals.globals.BENCHMARKS_NICE_STRINGS_DICT[benchmark_and_optional_task]}\n"
-#         + f"Performance Metric: {pred_evals.globals.PERFORMANCE_METRICS_NICE_STRINGS_DICT[metric]}\n"
-#         + f"Correlation Metric: {pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT[correlation_metric]}",
-#     )
-#
-#     pred_evals.plot.save_plot_with_multiple_extensions(
-#         plot_dir=benchmark_and_metric_results_dir,
-#         plot_title=f"{benchmark_and_optional_task}_{metric}_kde_and_ecdf_vs_correlation_score_by_model_family_correlation_metric={correlation_metric}",
-#     )
-#     # plt.show()
-#     plt.close()
+for (
+    (benchmark_and_optional_task, metric, correlation_metric),
+    benchmark_metric_correlation_df,
+) in per_sample_correlations_between_scores_and_compute_df.groupby(
+    ["benchmark_and_optional_task", "metric", "correlation_metric"]
+):
+    benchmark_and_metric_results_dir = os.path.join(
+        results_dir,
+        "correlation_distributions",
+        benchmark_and_optional_task,
+        metric,
+        correlation_metric,
+    )
+    os.makedirs(benchmark_and_metric_results_dir, exist_ok=True)
+
+    # Plot KDEs and ECDFs of correlation scores.
+    plt.close()
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15, 6), sharey=False)
+    sns.kdeplot(
+        data=benchmark_metric_correlation_df,
+        x="correlation_score",
+        hue="Model Family",
+        hue_order=sorted_unique_model_families,
+        clip=(-1.0, 1.0),  # Don't evaluate KDE on impermissible correlations.
+        common_norm=False,
+        ax=axes[0],
+        legend=False,
+    )
+    axes[0].set_xlim(-1.0, 1.0)
+    axes[0].set_xlabel("Correlation Between FLOPs and Scores (Per Sample)")
+    axes[0].set_ylabel(
+        r"\% of Samples"
+    )  # Need to escape Latex's interpretation of % as a comment.
+
+    g = sns.ecdfplot(
+        data=benchmark_metric_correlation_df,
+        x="correlation_score",
+        hue="Model Family",
+        hue_order=sorted_unique_model_families,
+        complementary=True,
+        ax=axes[1],
+    )
+    axes[1].set_xlim(-1.0, 1.0)
+    axes[1].set_xlabel("Correlation Between FLOPs and Scores (Per Sample)")
+    axes[1].set_ylabel("1 - CDF")
+    sns.move_legend(g, "upper left", bbox_to_anchor=(1, 1))
+    fig.suptitle(
+        f"Benchmark: {pred_evals.globals.BENCHMARKS_NICE_STRINGS_DICT[benchmark_and_optional_task]}\n"
+        + f"Performance Metric: {pred_evals.globals.PERFORMANCE_METRICS_NICE_STRINGS_DICT[metric]}\n"
+        + f"Correlation Metric: {pred_evals.globals.CORRELATION_STATISTICS_NICE_STRINGS_DICT[correlation_metric]}",
+    )
+
+    pred_evals.plot.save_plot_with_multiple_extensions(
+        plot_dir=benchmark_and_metric_results_dir,
+        plot_title=f"{benchmark_and_optional_task}_{metric}_kde_and_ecdf_vs_correlation_score_by_model_family_correlation_metric={correlation_metric}",
+    )
+    # plt.show()
+    plt.close()
 
 # per_sample_correlations_between_scores_and_compute_df[
 #     "sample_idx"
