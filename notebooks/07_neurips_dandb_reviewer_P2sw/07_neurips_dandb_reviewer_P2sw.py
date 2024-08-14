@@ -113,7 +113,7 @@ benchmark_metric_model_family_correlations_statistics_df.sort_values(
 ordered_unique_correlation_distribution_statistics = [
     "Mean(Correlations)",
     "Median(Correlations)",
-    "AUC of Correlations' Complementary CDF",
+    "AUC of Correlations' Complementary Cumulative Distribution Function",
     "-Min(Wasserstein(Correlations, 1), Wasserstein(Correlations, -1))",
 ]
 
@@ -216,6 +216,7 @@ for (
         col_order=ordered_unique_correlation_distribution_statistics,
         row="Metric",
         row_order=sorted_unique_metrics,
+        s=150,
         facet_kws={"margin_titles": True, "sharex": False, "sharey": True},
     )
     g.set(
