@@ -8,7 +8,7 @@ by Rylan Schaeffer, Hailey Schoelkopf, Brando Miranda, Gabriel Mukobi, Varun Mad
 
 [![arXiv](https://img.shields.io/badge/arXiv-2406.04391-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2406.04391)
 
-[**Setup**](#installation) | [**Usage**](#usage) | [**Contributing**](#contributing) | [**Citating**](#citing) | [**Contact**](#contact)
+[**Setup**](#installation) | [**Usage**](#usage) | [**Contributing**](#contributing) | [**Citing**](#citing) | [**Contact**](#contact)
 
 
 ## Installation
