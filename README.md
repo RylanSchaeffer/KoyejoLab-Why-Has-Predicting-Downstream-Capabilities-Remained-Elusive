@@ -3,7 +3,7 @@
 ![](figures/Transformations_v10.png)
 
 This repository contains code and figures for our paper
-[Why Has Predicting Downstream Capabilities of Frontier AI Models with Scale Remained Elusive?](https://arxiv.org/abs/2406.04391)
+Why Has Predicting Downstream Capabilities of Frontier AI Models with Scale Remained Elusive?
 by Rylan Schaeffer, Hailey Schoelkopf, Brando Miranda, Gabriel Mukobi, Varun Madan, Adam Ibrahim, Herbie Bradley, Stella Biderman and Sanmi Koyejo.
 
 [![arXiv](https://img.shields.io/badge/arXiv-2406.04391-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2406.04391)
